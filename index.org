@@ -1,0 +1,51 @@
+#+TITLE: Project: Video calling application
+#+OPTIONS: toc:2
+#+OPTIONS: num:2
+#+OPTIONS: p:t
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+* Objectives
+** Create an application which will set up an 1:1 video call.
+*** working outline (basic)
+**** TODO *To set up a video call bewtween two users*
+     one of them has to set up a call - i.e generate a *call-id* and share it with the other person he wants to connect with, using any other msging
+     platform. Next, the other user will use this id to join into the call.
+**** TODO *Leaving the call*
+      When a meeting id is generated, a virtual space is created for two people to join in and have a chat, both people can join the
+      space, or leave it an any moment.
+**** TODO *Terminating the call*
+      The person who is creating the call has a special power to *terminate it*.
+      /If both users have left the call for a specified time $t$ then it *auto-terminates*/
+*** User functions to be implemented.
+**** TODO *Allocate the call space on specific time, given by the creater of the call*
+     When the user creates an call-id, he will have an option to create the call now or *shedule* it on a specific date-time.
+     Then both of them have to join in at that time.
+*** API connectivity
+    Video calling web application has to integrate with other application built by team members. So it has to has to have
+    an api by which the team member can schedule an appointment, using their application interface.
+* Technology Stack
+  1. JS, HTML, CSS
+  2. Webrtc
+  3. Firebase/Setting up a stern server
+* Topics deep-dive
+** Webrtc
+*** Overview
+    + Stands for Web real-time communication.
+    + Find a Peer to peer path to exchange video and audio in a clear and efficient manner.
+    + Standardized API
+    + A want to connet to B
+    + A finds to find out all possible ways the *public* can connect to it.
+    + B finds to find out all possible ways the *public* can connect to it.
+    + A and B signal this session information via other means
+      + WhatsApp, QR, Tweet, Websockets, HTTP fetch
+    + A connects to B via the most optimal path. (a graph network structure)
+    + A & B exhanges their supported media and security.
+    + Key terms
+      - NAT
+      - STUN
+      - ICE
+      - SDP
+      - Signalling the SDP.
+
+* Resources
+ + [[https://www.youtube.com/watch?v=FExZvpVvYxA][WebRtc CrashCourse]]

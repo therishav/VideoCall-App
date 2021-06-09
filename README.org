@@ -1,0 +1,7 @@
+#+TITLE: Project: Video calling application
+#+OPTIONS: toc:2
+#+OPTIONS: num:nil
+* About
+  An application for setting up a 1:1 video call using WebRTC.
+
+  The Documentation/Todos can be found here [[https://therishav.github.io/VideoCall-App/][here]].
