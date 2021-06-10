@@ -3,30 +3,33 @@
 #+OPTIONS: num:2
 #+OPTIONS: p:t
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
+#+HTML_HEAD: <style> #content{max-width:1800px;}</style>
+
 
 * Objectives
 ** Create an application which will set up an 1:1 video call.
-*** working outline (basic)
+*** Working outline (basic)
 **** TODO *To set up a video call bewtween two users*
      one of them has to set up a call - i.e generate a *call-id* and share it with the other person he wants to connect with, using any other msging
      platform. Next, the other user will use this id to join into the call.
 **** TODO *Leaving the call*
-      When a meeting id is generated, a virtual space is created for two people to join in and have a chat, both people can join the
-      space, or leave it an any moment.
+     When a meeting id is generated, a virtual space is created for two people to join in and have a chat, both people can join the
+     space, or leave it an any moment.
 **** TODO *Terminating the call*
-      The person who is creating the call has a special power to *terminate it*.
-      /If both users have left the call for a specified time $t$ then it *auto-terminates*/
+     The person who is creating the call has a special power to *terminate it*.
+     /If both users have left the call for a specified time $t$ then it *auto-terminates*/
 *** User functions to be implemented.
 **** TODO *Allocate the call space on specific time, given by the creater of the call*
-     When the user creates an call-id, he will have an option to create the call now or *shedule* it on a specific date-time.
+     When the user creates a call-id, he will have an option to create the call now or *shedule* it on a specific date-time.
      Then both of them have to join in at that time.
 *** API connectivity
-    Video calling web application has to integrate with other application built by team members. So it has to has to have
-    an api by which the team member can schedule an appointment, using their application interface.
+    Video calling web-app has to integrate with other applications built by team members. So it has to has to have
+    an api by which the team member can schedule an appointment, using their own application interface.
 * Technology Stack
   1. JS, HTML, CSS
   2. Webrtc
-  3. Firebase/Setting up a stern server
+  3. Firebase/Setting up a STUN server
 * Topics deep-dive
 ** Webrtc
 *** Overview
@@ -46,6 +49,186 @@
       - ICE
       - SDP
       - Signalling the SDP.
+** NAT
+*** Overview
+    #+CAPTION: send data using NAT
+    #+NAME:   fig:Send data using NAT
+    [[./img/nat_send.png]]
 
+    #+CAPTION: recieve data using NAT
+   #+NAME:   fig:recieve data using NAT
+   [[./img/nat_rec.png]]
+
+    There are 4 kinds of NAT:
+    1. Full cone or One to One NAT
+       + Packets to external IP:port on the router always maps to internal IP:port without exceptions.
+           #+CAPTION: Full cone nat
+           #+NAME:   fig:NAT table coloums needed to match with IP packet data
+          [[./img/nat1.png]]
+       #+CAPTION: NAT packet matching example
+       #+NAME:   fig:All packets with destination IP 5555 and port no 3333 will be delivered
+      [[./img/nat2.png]]
+      Here we don't check if we know the person, sending the info ie, NAT table's destination ip and port doesn't
+      need to match with incoming ip packet's ip or port.
+    2. Address restricted NAT
+    3. Port restricted NAT
+    4. Symmetric NAT
+** STUN
+*** Overview
+    + Session traversal utilities for NAT
+    + Tell me my public ip address/port through NAT
+    + Works for full-cone, Port/Adress restricted NAT
+    + Doesn't work for symmetric NAT
+    + Cheap to maintain
+
+    #+CAPTION: STUN When it works
+    #+NAME:   fig:STUN when it works
+    [[./img/stun.png]]
+
+** TURN
+*** Overview
+    + Traversal using relays around NAT
+    + In case of Symmetric NAT we use TURN
+    + It's just a server that relays packets
+    + Expensive to maintain and run
+
+      #+CAPTION: TURN When it works
+    #+NAME:   fig:TURN when it works
+    [[./img/turn.png]]
+** ICE
+*** Overview
+    + Interactive Connectivity Establishment
+    + ICE collects all available candidates (local IP addresses, reflexive addresses - STUN ones
+      and relayed addresses - TURN ones)
+    + Called ice candidates
+    + All the collected addresses are then sent to the remote peer via SDP
+*** onIceCandidiate and addIceCandidate
+    + To maintain the connection as new candidates come and go
+    + onIceCandidate tells user there is a new candidate after the SDP has already been created
+    + The candidate is signalled and sent to the other party
+    + The other party uses addiceCandidate to add it to its SDP
+** SDP
+*** Overview
+    + Session Description Protocol
+    + A format that describes ice candidates, networking options, media options, security options
+      and other stuff
+    + Not really a protocol but a format
+    + Most important concept WebRTC
+    + The goal is to take the SDP generated by a user and send it "somehow" to the other party
+
+* WebRTC demo
+** Ex outline
+   1. A wants to connect to B
+   2. A creates and "offer", it finds all ice candidates, security options, audio/video stream options and generates SDP,
+      *the offer is basically the SDP*
+   3. A signals the offer somehow to B
+   4. B creates the "answer" after setting A's offer
+   5. B signals the "answer" to A
+   6. Connection is created!!.
+** Code outilne
+   What are we going to do-
+   1. We will connect browsers (Browsers A and B)
+   2. A will create an offer (sdp) and set it as local description
+   3. B will get the offer and set it as remote description
+   4. B creates an answer sets it as its local description and signals the answer(sdp) to A
+   5. A sets the answer as its remote description.
+   6. Connection established, exchange data!!
+** Example with text
+   Here well will make two browsers send text data between each other.
+   Input code in browser console, to start a communication channel
+
+   *Browser 1, initiator*
+   #+begin_src javascript
+     const lc = new RTCPeerConnection();
+     // creating a data channel, a chanell we are gonna communicate through
+     const dc = lc.createDataChannel("channel");
+
+     // when we recive a msg print the following
+     dc.onmessage = e => console.log("Just got a message " + e.data);
+     dc.onopen = e => console.log("Connection Open");
+
+     // before creating an offer, reprint sdp every-time new ice candidate is encounterd
+     lc.onicecandidate = e => console.log("New ice candidate! reprinting SDP" + JSON.stringify(lc.localDescription));
+
+     // wait 12 secs?
+     // create the offer (promise)
+     lc.createOffer().then(o => lc.setLocalDescription(0)).then(a => console.log("set succesfully!"));
+     // signal to peer 2
+   #+end_src
+
+   *Browser 2, accepts the offer, and gives an answer*
+   #+begin_src javascript
+     const offer = {paste spd data}
+
+     const rc = new RTCPeerConnection();
+
+     rc.onicecandidate = e => console.log("New ice candidate! reprinting SDP" + JSON.stringify(rc.localDescription));
+
+     rc.ondatachannel = e => {
+         rc.dc = e.channel;
+         rc.dc.onmessage = e => console.log("new message from client!" + e.data)
+         rc.dc.onopen = e => console.log("Connection OPENED!!!")
+     };
+
+     rc.setRemoteDescription(offer).then(a => console.log("offer set!"));
+     rc.createAnswer().then (a => rc.setLocalDescription(a)).then(a => console.log("answer created"));
+
+     // Now signal the answer back to peer 1
+   #+end_src
+
+   *Browser 1, accepts the answer, sets up the channel*
+   #+begin_src javascript
+     const answer = paste_aswer_from_brower_2;
+
+     lc.setRemoteDescription(answer);
+
+     // pray and see if connection is opened
+     // if connection opened, to send data
+     dc.send("Hello, how are you?");
+   #+end_src
+
+   *Browser 2, send data, after connection is opened*
+   #+begin_src javascript
+     rc.dc.send("I am fine ThankYou!!");
+   #+end_src
+
+** Example with media
+   Send video and audio between two browsers. Same workflow as prev only difference being, we need to
+   save the stream using =MediaDevices.getUserMedia()= function and pass it to =lc.addTrack(stream)=
+** WebRTC Pros and Cons
+*** Pros
+    + Peer to peer is great! low latency for high bandwith content.
+    + Standardized API I don't have to built my own.
+*** Cons
+    + Maintaining STUNS and TURN sernvers
+    + P2P fails apart in case of multiple participants (discord case)
+** Set custom STUN and TURN server
+   + /Serach public STUN servers/
+   + [[https://github.com/coturn/coturn][coturn create your own STUN and TURN server github]]
+   #+begin_src javascript
+     const iceConfiguration = {
+         iceServers : [{
+             urls: 'turn:turnserver.company.com:3478',
+             username: 'optional-username',
+             credentials: 'auth-token'},
+                       { urls: "",
+                         username: "",
+                         credential: ""
+                       }
+         }]
+     }
+
+     const pc = new RTCPeerConnection(configuration);
+   #+end_src
 * Resources
- + [[https://www.youtube.com/watch?v=FExZvpVvYxA][WebRtc CrashCourse]]
+  + [[https://www.youtube.com/watch?v=FExZvpVvYxA][WebRtc CrashCourse]]
+  + [[https://www.html5rocks.com/en/tutorials/webrtc/basics/][WebRTC basics blog by html5 rocks]]
+  + https://developer.mozilla.org/en-US/d
+  + https://developer.mozilla.org/en-US/d
+  + https://developer.mozilla.org/en-US/d
+  + https://tools.ietf.org/html/draft-iet
+  + https://support.frozenmountain.com/hc
+  + https://webrtcforthecurious.com/
+  + https://getvoip.com/blog/2013/02/27/s
+  + https://www.onsip.com/voip-resources/
+  + http://io13webrtc.appspot.com/#52

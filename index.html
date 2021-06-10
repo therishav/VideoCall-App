@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-09 Wed 14:16 -->
+<!-- 2021-06-10 Thu 20:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Project: Video calling application</title>
@@ -198,6 +198,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
+<style> #content{max-width:1800px;}</style>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -250,53 +252,69 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3bb3d57">1. Objectives</a>
+<li><a href="#orge7844f9">1. Objectives</a>
 <ul>
-<li><a href="#org56e5f6b">1.1. Create an application which will set up an 1:1 video call.</a></li>
+<li><a href="#orge1512c4">1.1. Create an application which will set up an 1:1 video call.</a></li>
 </ul>
 </li>
-<li><a href="#org924f759">2. Technology Stack</a></li>
-<li><a href="#org5fe1ea1">3. Topics deep-dive</a>
+<li><a href="#orgf3f537c">2. Technology Stack</a></li>
+<li><a href="#org5929f78">3. Topics deep-dive</a>
 <ul>
-<li><a href="#org27103a2">3.1. Webrtc</a></li>
+<li><a href="#orgff5e7a1">3.1. Webrtc</a></li>
+<li><a href="#orgebbd8a4">3.2. NAT</a></li>
+<li><a href="#orgd2f08dd">3.3. STUN</a></li>
+<li><a href="#org74efd0c">3.4. TURN</a></li>
+<li><a href="#org62a11e1">3.5. ICE</a></li>
+<li><a href="#org0c812ff">3.6. SDP</a></li>
 </ul>
 </li>
-<li><a href="#orgcf2c7a3">4. Resources.</a></li>
+<li><a href="#org4ff2c65">4. WebRTC demo</a>
+<ul>
+<li><a href="#org87f5a91">4.1. Ex outline</a></li>
+<li><a href="#org75be07b">4.2. Code outilne</a></li>
+<li><a href="#orgb461b2f">4.3. Example with text</a></li>
+<li><a href="#orgfb11fda">4.4. Example with media</a></li>
+<li><a href="#org58c4a6b">4.5. WebRTC Pros and Cons</a></li>
+<li><a href="#orgf132f32">4.6. Set custom STUN and TURN server</a></li>
+</ul>
+</li>
+<li><a href="#orgb40c813">5. Resources</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3bb3d57" class="outline-2">
-<h2 id="org3bb3d57"><span class="section-number-2">1.</span> Objectives</h2>
+
+<div id="outline-container-orge7844f9" class="outline-2">
+<h2 id="orge7844f9"><span class="section-number-2">1.</span> Objectives</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org56e5f6b" class="outline-3">
-<h3 id="org56e5f6b"><span class="section-number-3">1.1.</span> Create an application which will set up an 1:1 video call.</h3>
+<div id="outline-container-orge1512c4" class="outline-3">
+<h3 id="orge1512c4"><span class="section-number-3">1.1.</span> Create an application which will set up an 1:1 video call.</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-org331e904" class="outline-4">
-<h4 id="org331e904">working outline (basic)</h4>
-<div class="outline-text-4" id="text-org331e904">
+<div id="outline-container-org77d7cc1" class="outline-4">
+<h4 id="org77d7cc1">Working outline (basic)</h4>
+<div class="outline-text-4" id="text-org77d7cc1">
 </div>
 <ul class="org-ul">
-<li><a id="org517ddf3"></a><span class="todo TODO">TODO</span> <b>To set up a video call bewtween two users</b><br />
-<div class="outline-text-5" id="text-org517ddf3">
+<li><a id="org5eabf34"></a><span class="todo TODO">TODO</span> <b>To set up a video call bewtween two users</b><br />
+<div class="outline-text-5" id="text-org5eabf34">
 <p>
 one of them has to set up a call - i.e generate a <b>call-id</b> and share it with the other person he wants to connect with, using any other msging
 platform. Next, the other user will use this id to join into the call.
 </p>
 </div>
 </li>
-<li><a id="orgf2869fb"></a><span class="todo TODO">TODO</span> <b>Leaving the call</b><br />
-<div class="outline-text-5" id="text-orgf2869fb">
+<li><a id="orga5b4561"></a><span class="todo TODO">TODO</span> <b>Leaving the call</b><br />
+<div class="outline-text-5" id="text-orga5b4561">
 <p>
 When a meeting id is generated, a virtual space is created for two people to join in and have a chat, both people can join the
 space, or leave it an any moment.
 </p>
 </div>
 </li>
-<li><a id="org0fc9478"></a><span class="todo TODO">TODO</span> <b>Terminating the call</b><br />
-<div class="outline-text-5" id="text-org0fc9478">
+<li><a id="org45ce47d"></a><span class="todo TODO">TODO</span> <b>Terminating the call</b><br />
+<div class="outline-text-5" id="text-org45ce47d">
 <p>
 The person who is creating the call has a special power to <b>terminate it</b>.
 <i>If both users have left the call for a specified time \(t\) then it <b>auto-terminates</b></i>
@@ -305,53 +323,53 @@ The person who is creating the call has a special power to <b>terminate it</b>.
 </li>
 </ul>
 </div>
-<div id="outline-container-org81cb460" class="outline-4">
-<h4 id="org81cb460">User functions to be implemented.</h4>
-<div class="outline-text-4" id="text-org81cb460">
+<div id="outline-container-orgb2cd007" class="outline-4">
+<h4 id="orgb2cd007">User functions to be implemented.</h4>
+<div class="outline-text-4" id="text-orgb2cd007">
 </div>
 <ul class="org-ul">
-<li><a id="org917585a"></a><span class="todo TODO">TODO</span> <b>Allocate the call space on specific time, given by the creater of the call</b><br />
-<div class="outline-text-5" id="text-org917585a">
+<li><a id="orgc1a0342"></a><span class="todo TODO">TODO</span> <b>Allocate the call space on specific time, given by the creater of the call</b><br />
+<div class="outline-text-5" id="text-orgc1a0342">
 <p>
-When the user creates an call-id, he will have an option to create the call now or <b>shedule</b> it on a specific date-time.
+When the user creates a call-id, he will have an option to create the call now or <b>shedule</b> it on a specific date-time.
 Then both of them have to join in at that time.
 </p>
 </div>
 </li>
 </ul>
 </div>
-<div id="outline-container-org938913e" class="outline-4">
-<h4 id="org938913e">API connectivity</h4>
-<div class="outline-text-4" id="text-org938913e">
+<div id="outline-container-org39b8e99" class="outline-4">
+<h4 id="org39b8e99">API connectivity</h4>
+<div class="outline-text-4" id="text-org39b8e99">
 <p>
-Video calling web application has to integrate with other application built by team members. So it has to has to have
-an api by which the team member can schedule an appointment, using their application interface.
+Video calling web-app has to integrate with other applications built by team members. So it has to has to have
+an api by which the team member can schedule an appointment, using their own application interface.
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org924f759" class="outline-2">
-<h2 id="org924f759"><span class="section-number-2">2.</span> Technology Stack</h2>
+<div id="outline-container-orgf3f537c" class="outline-2">
+<h2 id="orgf3f537c"><span class="section-number-2">2.</span> Technology Stack</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>JS, HTML, CSS</li>
 <li>Webrtc</li>
-<li>Firebase/Setting up a stern server</li>
+<li>Firebase/Setting up a STUN server</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org5fe1ea1" class="outline-2">
-<h2 id="org5fe1ea1"><span class="section-number-2">3.</span> Topics deep-dive</h2>
+<div id="outline-container-org5929f78" class="outline-2">
+<h2 id="org5929f78"><span class="section-number-2">3.</span> Topics deep-dive</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org27103a2" class="outline-3">
-<h3 id="org27103a2"><span class="section-number-3">3.1.</span> Webrtc</h3>
+<div id="outline-container-orgff5e7a1" class="outline-3">
+<h3 id="orgff5e7a1"><span class="section-number-3">3.1.</span> Webrtc</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-orgeccdca3" class="outline-4">
-<h4 id="orgeccdca3">Overview</h4>
-<div class="outline-text-4" id="text-orgeccdca3">
+<div id="outline-container-orgaefa23b" class="outline-4">
+<h4 id="orgaefa23b">Overview</h4>
+<div class="outline-text-4" id="text-orgaefa23b">
 <ul class="org-ul">
 <li>Stands for Web real-time communication.</li>
 <li>Find a Peer to peer path to exchange video and audio in a clear and efficient manner.</li>
@@ -377,19 +395,343 @@ an api by which the team member can schedule an appointment, using their applica
 </div>
 </div>
 </div>
+<div id="outline-container-orgebbd8a4" class="outline-3">
+<h3 id="orgebbd8a4"><span class="section-number-3">3.2.</span> NAT</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org33cf585" class="outline-4">
+<h4 id="org33cf585">Overview</h4>
+<div class="outline-text-4" id="text-org33cf585">
+
+<div id="orgd88d24f" class="figure">
+<p><img src="./img/nat_send.png" alt="nat_send.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>send data using NAT</p>
 </div>
 
-<div id="outline-container-orgcf2c7a3" class="outline-2">
-<h2 id="orgcf2c7a3"><span class="section-number-2">4.</span> Resources.</h2>
+
+<div id="org3670604" class="figure">
+<p><img src="./img/nat_rec.png" alt="nat_rec.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>recieve data using NAT</p>
+</div>
+
+<p>
+There are 4 kinds of NAT:
+</p>
+<ol class="org-ol">
+<li><p>
+Full cone or One to One NAT
+</p>
+<ul class="org-ul">
+<li><p>
+Packets to external IP:port on the router always maps to internal IP:port without exceptions.
+</p>
+
+<div id="orgc18de39" class="figure">
+<p><img src="./img/nat1.png" alt="nat1.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Full cone nat</p>
+</div></li>
+</ul>
+<p>
+<img src="./img/nat2.png" alt="nat2.png" />
+Here we don't check if we know the person, sending the info ie, NAT table's destination ip and port doesn't
+need to match with incoming ip packet's ip or port.
+</p></li>
+<li>Address restricted NAT</li>
+<li>Port restricted NAT</li>
+<li>Symmetric NAT</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd2f08dd" class="outline-3">
+<h3 id="orgd2f08dd"><span class="section-number-3">3.3.</span> STUN</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-org42666e0" class="outline-4">
+<h4 id="org42666e0">Overview</h4>
+<div class="outline-text-4" id="text-org42666e0">
+<ul class="org-ul">
+<li>Session traversal utilities for NAT</li>
+<li>Tell me my public ip address/port through NAT</li>
+<li>Works for full-cone, Port/Adress restricted NAT</li>
+<li>Doesn't work for symmetric NAT</li>
+<li>Cheap to maintain</li>
+</ul>
+
+
+<div id="org77f58cf" class="figure">
+<p><img src="./img/stun.png" alt="stun.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>STUN When it works</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org74efd0c" class="outline-3">
+<h3 id="org74efd0c"><span class="section-number-3">3.4.</span> TURN</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-orgfdc8c96" class="outline-4">
+<h4 id="orgfdc8c96">Overview</h4>
+<div class="outline-text-4" id="text-orgfdc8c96">
+<ul class="org-ul">
+<li>Traversal using relays around NAT</li>
+<li>In case of Symmetric NAT we use TURN</li>
+<li>It's just a server that relays packets</li>
+<li><p>
+Expensive to maintain and run
+</p></li>
+</ul>
+
+<div id="org48047da" class="figure">
+<p><img src="./img/turn.png" alt="turn.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org62a11e1" class="outline-3">
+<h3 id="org62a11e1"><span class="section-number-3">3.5.</span> ICE</h3>
+<div class="outline-text-3" id="text-3-5">
+</div>
+<div id="outline-container-orgf7811f4" class="outline-4">
+<h4 id="orgf7811f4">Overview</h4>
+<div class="outline-text-4" id="text-orgf7811f4">
+<ul class="org-ul">
+<li>Interactive Connectivity Establishment</li>
+<li>ICE collects all available candidates (local IP addresses, reflexive addresses - STUN ones
+and relayed addresses - TURN ones)</li>
+<li>Called ice candidates</li>
+<li>All the collected addresses are then sent to the remote peer via SDP</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org80a9293" class="outline-4">
+<h4 id="org80a9293">onIceCandidiate and addIceCandidate</h4>
+<div class="outline-text-4" id="text-org80a9293">
+<ul class="org-ul">
+<li>To maintain the connection as new candidates come and go</li>
+<li>onIceCandidate tells user there is a new candidate after the SDP has already been created</li>
+<li>The candidate is signalled and sent to the other party</li>
+<li>The other party uses addiceCandidate to add it to its SDP</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org0c812ff" class="outline-3">
+<h3 id="org0c812ff"><span class="section-number-3">3.6.</span> SDP</h3>
+<div class="outline-text-3" id="text-3-6">
+</div>
+<div id="outline-container-org0559dca" class="outline-4">
+<h4 id="org0559dca">Overview</h4>
+<div class="outline-text-4" id="text-org0559dca">
+<ul class="org-ul">
+<li>Session Description Protocol</li>
+<li>A format that describes ice candidates, networking options, media options, security options
+and other stuff</li>
+<li>Not really a protocol but a format</li>
+<li>Most important concept WebRTC</li>
+<li>The goal is to take the SDP generated by a user and send it "somehow" to the other party</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ff2c65" class="outline-2">
+<h2 id="org4ff2c65"><span class="section-number-2">4.</span> WebRTC demo</h2>
 <div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org87f5a91" class="outline-3">
+<h3 id="org87f5a91"><span class="section-number-3">4.1.</span> Ex outline</h3>
+<div class="outline-text-3" id="text-4-1">
+<ol class="org-ol">
+<li>A wants to connect to B</li>
+<li>A creates and "offer", it finds all ice candidates, security options, audio/video stream options and generates SDP,
+<b>the offer is basically the SDP</b></li>
+<li>A signals the offer somehow to B</li>
+<li>B creates the "answer" after setting A's offer</li>
+<li>B signals the "answer" to A</li>
+<li>Connection is created!!.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org75be07b" class="outline-3">
+<h3 id="org75be07b"><span class="section-number-3">4.2.</span> Code outilne</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+What are we going to do-
+</p>
+<ol class="org-ol">
+<li>We will connect browsers (Browsers A and B)</li>
+<li>A will create an offer (sdp) and set it as local description</li>
+<li>B will get the offer and set it as remote description</li>
+<li>B creates an answer sets it as its local description and signals the answer(sdp) to A</li>
+<li>A sets the answer as its remote description.</li>
+<li>Connection established, exchange data!!</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb461b2f" class="outline-3">
+<h3 id="orgb461b2f"><span class="section-number-3">4.3.</span> Example with text</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Here well will make two browsers send text data between each other.
+Input code in browser console, to start a communication channel
+</p>
+
+<p>
+<b>Browser 1, initiator</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #F92672;">const</span> <span style="color: #FD971F;">lc</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">RTCPeerConnection</span>();
+<span style="color: #75715E;">// </span><span style="color: #75715E;">creating a data channel, a chanell we are gonna communicate through</span>
+<span style="color: #F92672;">const</span> <span style="color: #FD971F;">dc</span> = lc.createDataChannel(<span style="color: #E6DB74;">"channel"</span>);
+
+<span style="color: #75715E;">// </span><span style="color: #75715E;">when we recive a msg print the following</span>
+dc.onmessage = e =&gt; console.log(<span style="color: #E6DB74;">"Just got a message "</span> + e.data);
+dc.onopen = e =&gt; console.log(<span style="color: #E6DB74;">"Connection Open"</span>);
+
+<span style="color: #75715E;">// </span><span style="color: #75715E;">before creating an offer, reprint sdp every-time new ice candidate is encounterd</span>
+lc.onicecandidate = e =&gt; console.log(<span style="color: #E6DB74;">"New ice candidate! reprinting SDP"</span> + JSON.stringify(lc.localDescription));
+
+<span style="color: #75715E;">// </span><span style="color: #75715E;">wait 12 secs?</span>
+<span style="color: #75715E;">// </span><span style="color: #75715E;">create the offer (promise)</span>
+lc.createOffer().then(o =&gt; lc.setLocalDescription(0)).then(a =&gt; console.log(<span style="color: #E6DB74;">"set succesfully!"</span>));
+<span style="color: #75715E;">// </span><span style="color: #75715E;">signal to peer 2</span>
+</pre>
+</div>
+
+<p>
+<b>Browser 2, accepts the offer, and gives an answer</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #F92672;">const</span> <span style="color: #FD971F;">offer</span> = {paste spd data}
+
+<span style="color: #F92672;">const</span> <span style="color: #FD971F;">rc</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">RTCPeerConnection</span>();
+
+rc.onicecandidate = e =&gt; console.log(<span style="color: #E6DB74;">"New ice candidate! reprinting SDP"</span> + JSON.stringify(rc.localDescription));
+
+rc.ondatachannel = e =&gt; {
+    rc.dc = e.channel;
+    rc.dc.onmessage = e =&gt; console.log(<span style="color: #E6DB74;">"new message from client!"</span> + e.data)
+    rc.dc.onopen = e =&gt; console.log(<span style="color: #E6DB74;">"Connection OPENED!!!"</span>)
+};
+
+rc.setRemoteDescription(offer).then(a =&gt; console.log(<span style="color: #E6DB74;">"offer set!"</span>));
+rc.createAnswer().then (a =&gt; rc.setLocalDescription(a)).then(a =&gt; console.log(<span style="color: #E6DB74;">"answer created"</span>));
+
+<span style="color: #75715E;">// </span><span style="color: #75715E;">Now signal the answer back to peer 1</span>
+</pre>
+</div>
+
+<p>
+<b>Browser 1, accepts the answer, sets up the channel</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #F92672;">const</span> <span style="color: #FD971F;">answer</span> = paste_aswer_from_brower_2;
+
+lc.setRemoteDescription(answer);
+
+<span style="color: #75715E;">// </span><span style="color: #75715E;">pray and see if connection is opened</span>
+<span style="color: #75715E;">// </span><span style="color: #75715E;">if connection opened, to send data</span>
+dc.send(<span style="color: #E6DB74;">"Hello, how are you?"</span>);
+</pre>
+</div>
+
+<p>
+<b>Browser 2, send data, after connection is opened</b>
+</p>
+<div class="org-src-container">
+<pre class="src src-javascript">rc.dc.send(<span style="color: #E6DB74;">"I am fine ThankYou!!"</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb11fda" class="outline-3">
+<h3 id="orgfb11fda"><span class="section-number-3">4.4.</span> Example with media</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Send video and audio between two browsers. Same workflow as prev only difference being, we need to
+save the stream using <code>MediaDevices.getUserMedia()</code> function and pass it to <code>lc.addTrack(stream)</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org58c4a6b" class="outline-3">
+<h3 id="org58c4a6b"><span class="section-number-3">4.5.</span> WebRTC Pros and Cons</h3>
+<div class="outline-text-3" id="text-4-5">
+</div>
+<div id="outline-container-orge2f7c55" class="outline-4">
+<h4 id="orge2f7c55">Pros</h4>
+<div class="outline-text-4" id="text-orge2f7c55">
+<ul class="org-ul">
+<li>Peer to peer is great! low latency for high bandwith content.</li>
+<li>Standardized API I don't have to built my own.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9c4c57f" class="outline-4">
+<h4 id="org9c4c57f">Cons</h4>
+<div class="outline-text-4" id="text-org9c4c57f">
+<ul class="org-ul">
+<li>Maintaining STUNS and TURN sernvers</li>
+<li>P2P fails apart in case of multiple participants (discord case)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf132f32" class="outline-3">
+<h3 id="orgf132f32"><span class="section-number-3">4.6.</span> Set custom STUN and TURN server</h3>
+<div class="outline-text-3" id="text-4-6">
+<ul class="org-ul">
+<li><i>Serach public STUN servers</i></li>
+<li><a href="https://github.com/coturn/coturn">coturn create your own STUN and TURN server github</a></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #F92672;">const</span> <span style="color: #FD971F;">iceConfiguration</span> = {
+    iceServers : [{
+        urls: <span style="color: #E6DB74;">'turn:turnserver.company.com:3478'</span>,
+        username: <span style="color: #E6DB74;">'optional-username'</span>,
+        credentials: <span style="color: #E6DB74;">'auth-token'</span>},
+                  { urls: <span style="color: #E6DB74;">""</span>,
+                    username: <span style="color: #E6DB74;">""</span>,
+                    credential: <span style="color: #E6DB74;">""</span>
+                  }
+    }]
+}
+
+<span style="color: #F92672;">const</span> <span style="color: #FD971F;">pc</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">RTCPeerConnection</span>(configuration);
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb40c813" class="outline-2">
+<h2 id="orgb40c813"><span class="section-number-2">5.</span> Resources</h2>
+<div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://www.youtube.com/watch?v=FExZvpVvYxA">WebRtc CrashCourse</a></li>
+<li><a href="https://www.html5rocks.com/en/tutorials/webrtc/basics/">WebRTC basics blog by html5 rocks</a></li>
+<li><a href="https://developer.mozilla.org/en-US/d">https://developer.mozilla.org/en-US/d</a></li>
+<li><a href="https://developer.mozilla.org/en-US/d">https://developer.mozilla.org/en-US/d</a></li>
+<li><a href="https://developer.mozilla.org/en-US/d">https://developer.mozilla.org/en-US/d</a></li>
+<li><a href="https://tools.ietf.org/html/draft-iet">https://tools.ietf.org/html/draft-iet</a></li>
+<li><a href="https://support.frozenmountain.com/hc">https://support.frozenmountain.com/hc</a></li>
+<li><a href="https://webrtcforthecurious.com/">https://webrtcforthecurious.com/</a></li>
+<li><a href="https://getvoip.com/blog/2013/02/27/s">https://getvoip.com/blog/2013/02/27/s</a></li>
+<li><a href="https://www.onsip.com/voip-resources/">https://www.onsip.com/voip-resources/</a></li>
+<li><a href="http://io13webrtc.appspot.com/#52">http://io13webrtc.appspot.com/#52</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-06-09 Wed 14:16</p>
+<p class="date">Created: 2021-06-10 Thu 20:03</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
