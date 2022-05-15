@@ -1,0 +1,58 @@
+#+TITLE: Week 2 Activity
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+
+* Objectives for this week
+** TODO Send media data between two local browsers.
+** TODO Send text data between two remote browsers
+** TODO Send media data between two remote browers.
+
+* Activites done this week
+** Day 1
+*** Working Time
+    <2021-06-14 Mon 9:45> to <2021-06-14 Mon 2:45>
+
+*** Things done
+    + Started working on sending media data between two browsers.
+    + Coded up a sample webpage for streaming webcam video data.
+
+** Day 2
+
+*** Working Time
+    <2021-06-15 Tue 9:45> to <2021-06-15 Tue 2:45>
+
+*** Things done
+    + Tried to send localStream to localConnection using addTrack fucntion
+    + Started on the implementation looking at these videos from this [[https://www.youtube.com/playlist?list=PLsOU6EOcj51fvJK7Z5sb5qM57NU8vYhTy][playlist]].
+
+** Day 3
+
+*** Working Time
+   -----
+
+*** Things done
+    + Could not work on anything because of, travel schedule to kolkata, whole day got
+      spent on this.
+
+** Day 4
+
+*** Working Time
+    <2021-06-17 Thu 10:20> to <2021-06-17 Thu 4:00>
+
+*** Things done
+    + Errors crept up while implementing the solution from youtube videos,
+      due to unforseen reasons, the code just did not work on my machine.
+    + Due to my low grasp of JS had to spent the whole day refreshing important
+      JS concepts which are mainly needed for node.js
+      watched this [[https://www.youtube.com/watch?v=NCwa_xi0Uuc][video]].
+
+** Day 5
+*** Working Time
+    <2021-06-25 Fri 10:15> to <2021-06-25 Fri 17:20>
+
+*** Things done
+    + Started working on a different implementation watching this [[https://www.youtube.com/watch?v=DvlyzDZDEq4&t=790s][video]]
+    + Learned about peer.js which is a wrapper around webRTC to make things simple
+
+* Obejectives for next week
+  *Same as this week*.

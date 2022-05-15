@@ -1,0 +1,72 @@
+#+TITLE: Week 4 Activity
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+* Objectives for this week
+** DONE Test Recuitment Tracker webpart
+** DONE Understand the basics of spfx
+
+* Activites done this week
+** Day 1
+*** Working Time
+    <2021-06-28 Mon 9:00> to <2021-06-28 Mon 17:00>
+
+*** Things done
+    + Planned on how we can add more funcionality.
+    + Tried adding buttons for ending and starting the call.
+
+** Day 2
+
+*** Working Time
+    ----------
+
+*** Things done
+    + Assignment work.
+
+** Day 3
+
+*** Working Time
+     ----------
+
+*** Things done
+    + Assignment work.
+
+** Day 4
+*** Working Time
+    <2021-07-01 Thu 9:00> to <2021-07-01 Thu 17:00>
+
+*** Things done
+    + Assigned testing role on Recuitment Tracker Webpart.
+    + Looked up what sharepoint is, and the reason to use spfx framework, from this [[https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview][overview]].
+    + Had a call with Sagar sir, understanding the funcionality of the project.
+
+** Day 5
+*** Working Time
+    <2021-07-02 Fri 9:00> to <2021-07-02 Fri 17:00>
+
+*** Things done
+    + Had a call with Abhijeet Sir, where I learnt more about spfx and sharepoint webparts development.
+    + Got my testing id, started testing.
+    + Made few demo users.
+** Day 6
+*** Working Time
+    <2021-06-03 Sat 9:00> to <2021-06-03 Sat 17:00>
+
+*** Things done
+    + Set up microsoft e5 developer account.
+    + created a test site in sharepoint.
+    + Started learning spfx by creating, hello world webpart, using this [[https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/build-a-hello-world-web-part][blog.]]
+
+** Day 7
+*** Working Time
+    <2021-07-04 Sun 11:00> to <2021-07-04 Sun 7:00>
+
+*** Things done
+    + Tested Recuitment Tracker application throughly.
+    + Made a test report and shared with Abhijeet Sir.
+    + To view test report, click [[https://1drv.ms/u/s!ArQqOdh2LFJagS9y8mSSPYZvP0-T][here]].
+
+* Obejectives for next week
+
+** TODO Discuss test results with Sagar Sir.
+** TODO Get on with spfx
+** TODO Complete video call application by adding functionality of creation of room links.

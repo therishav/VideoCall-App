@@ -6,6 +6,20 @@
 #+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
 #+HTML_HEAD: <style> #content{max-width:1800px;}</style>
 
+* Getting Started
+** Installing
+   #+begin_src shell
+     git clone <url>
+     npm i
+     npm start
+   #+end_src
+** Live site
+   Have a look at the live app by clicking [[https://vast-anchorage-00245.herokuapp.com/][here]].
+
+   1. Open live app in two different devices.
+   2. In device 1 type a room name and hit go.
+   3. In device 2 type the same room name and hit go.
+   4. Video call will be established between these two devices.
 
 * Objectives
 ** Create an application which will set up an 1:1 video call.
@@ -232,3 +246,5 @@
   + https://getvoip.com/blog/2013/02/27/s
   + https://www.onsip.com/voip-resources/
   + http://io13webrtc.appspot.com/#52
+  + [[https://www.youtube.com/watch?v=PoRJizFvM7s][Asycn Javascrip crash course]]
+  + [[https://ably.com/topic/socketio][Everything you need to know about socket.io]]

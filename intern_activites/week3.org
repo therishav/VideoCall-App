@@ -1,0 +1,56 @@
+#+TITLE: Week 3 Activity
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+* Objectives for this week
+** DONE Send media data between two local browsers.
+** DONE Send media data between two remote browers.
+* Activites done this week
+** Day 1
+*** Working Time
+    <2021-06-21 Mon 9:45> to <2021-06-21 Mon 2:45>
+
+*** Things done
+    + Started implementation of the test model using firebase.
+    + Read about the basics of firebase techonology
+
+** Day 2
+
+*** Working Time
+    <2021-06-22 Tue 9:45> to <2021-06-22 Tue 2:45>
+
+*** Things done
+    + Errors came up with the firebase implementation
+    + Tried to debug those
+
+** Day 3
+
+*** Working Time
+    <2021-06-23 Wed 9:45> to <2021-06-23 Wed 2:45>
+
+*** Things done
+    + Started on working on a fresh model using socket.io
+    + Read about the basics of socket.io techonology.
+
+** Day 4
+*** Working Time
+    <2021-06-24 Thu 10:20> to <2021-06-24 Thu 4:00>
+
+*** Things done
+    + Implemented a simple chat application, following steps from [[https://socket.io/get-started/chat][here]].
+    + Searched methods how socket.io will help with our application in
+      - creating rooms
+      - joining rooms
+      - signalling between peers
+
+** Day 5
+*** Working Time
+    <2021-06-25 Fri 10:15> to <2021-06-25 Fri 17:20>
+
+*** Things done
+    + Implemented a model using this WebRTC training [[https://www.youtube.com/playlist?list=PLayYqdnyegt0qX8EfEGExxZF3DxkyA1Dj][playlist]]
+    + Scheduled a demo.
+
+* Obejectives for next week
+
+** TODO Find ways how we can add mode functions to the deployed application.o
+** TODO Test out the appllication and eliminate existing bugs.

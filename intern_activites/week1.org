@@ -1,0 +1,41 @@
+#+TITLE: Week 1 Activity
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+
+* Activities done this week
+** Day 2
+*** Working time
+    <2021-06-08 Tue 09:30> to <2021-06-08 Tue 14:30>
+*** Things done
+    + Watced a video for  all the key details in breif of the technical concepts. These concepts were essential in understanding how WebRTC technology works.
+
+** Day 3
+*** Working time
+    <2021-06-09 Wed 09:30> to <2021-06-09 Wed 14:30>
+*** Things done
+    + Notes made for all the new terms and concepts learnt, so that I can refer to it again as need be.
+    + Started working on the initial documentation, jotting down all the requirements.
+
+** Day 4
+*** Working time
+    <2021-06-10 Thu 09:30> to <2021-06-10 Thu 14:30>
+*** Things done
+    + Set up a git remote repo with an active workflow with local repo, so that during the implementation phase, I can implement and push the feature directly to remote, for safety and organization purposes. Made tech mentor collaborator in repo.
+    + Learnt how to make two local browsers communicate with each other by sending text streams.
+
+** Day 5
+
+*** Working time
+    <2021-06-11 Fri 08:30> to <2021-06-11 Fri 12:30>
+
+***o Things done
+    + Worked on how we can make two local browsers send media streams between each other.
+
+* This week's achievements
+** DONE Set up a working git repo, for seamless workflow.
+** DONE Set up and hosted the initial documentation file
+** DONE Made two local browser send text data between themselves.
+* Next week's goals
+** TODO Make two local browsers send media data between themselves.
+** TODO Make two browers in different networks send text data between themselves.
+** TODO Make two browers in different networks send media data between themselves.

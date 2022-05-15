@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC Training</title>
+</head>
+<body>
+    <h1>WEBRTC Training</h1>
+    <div id= 'selectRoom'>
+      <label for="room">Type room name</label>
+      <input type="text" id='roomNumber'>
+      <button id='goRoom'>Go</button>
+    </div>
+    <div id='consultingRoom' style="display: none;">
+      <h2 id="callName"></h2>
+      <p>
+        <input type="text" id="inputCallName">
+        <button id="buttonSetName">Set Name</button>
+      </p>
+      <video autoplay id="localVideo"></video>
+      <video autoplay id="remoteVideo"></video>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+     <html>
+     <head>
+     <title>WebRTC Training</title>
+     </head>
+
+     <body>
+
+     <h1>WebRTC Training</h1>
+     <div id ="selectRoom">
+     <label>Type Room Name</label>
+     <input id="roomNumber" type="text"/>
+     <button id="goRoom">Go</button>
+     </div>
+
+     <div id="consultingRoom" style="display:none">
+     <video id="localVideo" autoplay> </video>
+     <video id="remoteVideo" autoplay></video>
+     </div>
+     <script src="/socket.io/socket.io.js"> </script>
+     <script src="main.js"></script>
+     </body>
+     </html> -->
